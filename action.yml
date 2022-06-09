@@ -1,0 +1,31 @@
+name: 'Smelly Python: Smell My PR'
+description: 'TODO'
+branding:
+  icon: 'message-square'
+  color: 'orange'
+runs:
+  using: "composite"
+  steps:
+    # Generate report
+    - name: Generate report from smelly-python
+      run: TODO
+    - name: Save .md report
+      uses: actions/upload-artifact@v3
+      with: 
+        name: smelly-python-${{ github.action }}.md
+        path: ${{ github.workspace }}
+    - name: Save output folder with html files
+      uses: actions/upload-artifact@v3
+      with:
+        name: TODO
+        path: ${{ github.workspace }}/
+    - name: Download report 
+      uses: actions/download-artifact@v3
+      with:
+	name: smelly-python-${{ github.action }}.md
+    - name: Post comment
+      uses: danielhs1/comment-on-pr@v1.3.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+	msg: smelly-python-${{ github.action }}.md
