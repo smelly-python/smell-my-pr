@@ -3,12 +3,18 @@ description: 'TODO'
 branding:
   icon: 'message-square'
   color: 'orange'
+inputs:
+  python-dir: 
+    description: The folder containing python files for pylint.
+    required: true
+    default: src
 runs:
   using: "composite"
   steps:
     # Generate report
     - name: Generate report from smelly-python
-      run: TODO
+      run: smelly-python -f ${{ inputs.python-dir }}
+    - run: mv ${{ github.workspace }}/report/comment.md ${{ github.workspace }}/report/comment-$(date -d "today" +"%Y%m%d%H%M").md 
     - name: Save .md report
       uses: actions/upload-artifact@v3
       with: 
@@ -17,8 +23,8 @@ runs:
     - name: Save output folder with html files
       uses: actions/upload-artifact@v3
       with:
-        name: TODO
-        path: ${{ github.workspace }}/
+        name: smelly-python-${{ github.action }}.md
+        path: ${{ github.workspace }}/report/comment-*.md
     - name: Download report 
       uses: actions/download-artifact@v3
       with:
