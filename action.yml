@@ -4,17 +4,24 @@ branding:
   icon: 'message-square'
   color: 'orange'
 inputs:
-  python-dir: 
+  command: 
     description: The folder containing python files for pylint.
     required: true
-    default: src
+    default: smelly-python -f src
+  github-token:
+    description: Github token
+    required: true
+    default: ""
 runs:
   using: "composite"
   steps:
     # Generate report
     - name: Generate report from smelly-python
-      run: smelly-python -f ${{ inputs.python-dir }}
-    - run: mv ${{ github.workspace }}/report/comment.md ${{ github.workspace }}/report/comment-$(date -d "today" +"%Y%m%d%H%M").md 
+      shell: bash
+      run: ${{ inputs.command }}
+    - name: Move to known location
+      shell: bash
+      run: mv ${{ github.workspace }}/report/comment.md ${{ github.workspace }}/report/comment-$(date -d "today" +"%Y%m%d%H%M").md 
     - name: Save .md report
       uses: actions/upload-artifact@v3
       with: 
@@ -32,6 +39,6 @@ runs:
     - name: Post comment
       uses: danielhs1/comment-on-pr@v1.3.2
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
       with: 
         msg: smelly-python-${{ github.action }}.md
