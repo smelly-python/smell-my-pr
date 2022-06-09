@@ -22,10 +22,10 @@ runs:
     - name: Download report 
       uses: actions/download-artifact@v3
       with:
-	name: smelly-python-${{ github.action }}.md
+        name: smelly-python-${{ github.action }}.md
     - name: Post comment
       uses: danielhs1/comment-on-pr@v1.3.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
-	msg: smelly-python-${{ github.action }}.md
+        msg: smelly-python-${{ github.action }}.md
