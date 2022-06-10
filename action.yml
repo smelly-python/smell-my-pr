@@ -26,12 +26,12 @@ runs:
       uses: actions/upload-artifact@v3
       with: 
         name: smelly-python-${{ github.action }}.md
-        path: ${{ github.workspace }}
+        path: ${{ github.workspace }}/report/smelly_python/comment-*.md
     - name: Save output folder with html files
       uses: actions/upload-artifact@v3
       with:
         name: smelly-python-${{ github.action }}.md
-        path: ${{ github.workspace }}/report/smelly_python/comment-*.md
+        path: ${{ github.workspace }}/report/smelly_python/*.html
     - name: Download report 
       uses: actions/download-artifact@v3
       with:
