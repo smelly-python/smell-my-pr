@@ -30,7 +30,7 @@ runs:
     - name: Save output folder with html files
       uses: actions/upload-artifact@v3
       with:
-        name: smelly-python-${{ github.action }}.md
+        name: smelly-python-${{ github.action }}.html
         path: ${{ github.workspace }}/report/smelly_python/*.html
     - name: Download report 
       uses: actions/download-artifact@v3
