@@ -37,8 +37,8 @@ runs:
       with:
         name: smelly-python-${{ github.action }}.md
     - name: Post comment
-      uses: danielhs1/comment-on-pr@v1.3.2
+      uses: harupy/comment-on-pr@v0.1.0
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with: 
-        msg: ${{ github.workspace }}/report/smelly_python/comment.md 
+        filename: ${{ github.workspace }}/report/smelly_python/comment.md 
