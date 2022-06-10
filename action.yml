@@ -36,9 +36,12 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: smelly-python-${{ github.action }}.md
+    - name: debugging
+      shell: bash
+      run: ls ${{ github.workspace }}/report/smelly_python
     - name: Post comment
-      uses: harupy/comment-on-pr@v0.1.0
+      uses: machine-learning-apps/pr-comment@master
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with: 
-        filename: ${{ github.workspace }}/report/smelly_python/comment.md 
+        path: ${{ github.workspace }}/report/smelly_python/comment.md 
