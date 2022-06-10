@@ -41,4 +41,4 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with: 
-        msg: ${{ github.workspace }}/report/smelly_python/comment.md 
+        filename: ${{ github.workspace }}/report/smelly_python/comment.md 
