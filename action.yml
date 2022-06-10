@@ -21,7 +21,7 @@ runs:
       run: ${{ inputs.command }}
     - name: Move to known location
       shell: bash
-      run: mv ${{ github.workspace }}/report/smelly_python/comment.md ${{ github.workspace }}/report/smelly_python/comment-$(date -d "today" +"%Y%m%d%H%M").md 
+      run: cp ${{ github.workspace }}/report/smelly_python/comment.md ${{ github.workspace }}/report/smelly_python/comment-$(date -d "today" +"%Y%m%d%H%M").md 
     - name: Save .md report
       uses: actions/upload-artifact@v3
       with: 
@@ -41,4 +41,4 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with: 
-        msg: smelly-python-${{ github.action }}.md
+        msg: ${{ github.workspace }}/report/smelly_python/comment.md 
