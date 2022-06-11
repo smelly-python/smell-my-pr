@@ -39,9 +39,14 @@ runs:
     - name: debugging
       shell: bash
       run: ls ${{ github.workspace }}/report/smelly_python
+#    - name: Post comment
+#      uses: machine-learning-apps/pr-comment@master
+#      env:
+#        GITHUB_TOKEN: ${{ inputs.github-token }}
+#      with:
+#        path: ${{ github.workspace }}/report/smelly_python/comment.md
     - name: Post comment
-      uses: machine-learning-apps/pr-comment@master
+      shell: bash
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
-      with: 
-        path: ${{ github.workspace }}/report/smelly_python/comment.md 
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: gh pr comment ${GITHUB_REF_NAME} -F ${{ github.workspace }}/report/smelly_python/comment.md
