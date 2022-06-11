@@ -19,23 +19,13 @@ runs:
     - name: Generate report from smelly-python
       shell: bash
       run: ${{ inputs.command }}
-    - name: Move to known location
-      shell: bash
-      run: cp ${{ github.workspace }}/report/smelly_python/comment.md ${{ github.workspace }}/report/smelly_python/comment-$(date -d "today" +"%Y%m%d%H%M").md 
-    - name: Save .md report
-      uses: actions/upload-artifact@v3
-      with: 
-        name: smelly-python-${{ github.action }}.md
-        path: ${{ github.workspace }}/report/smelly_python/comment-*.md
-    - name: Save output folder with html files
+    - name: Save output folder with html report
       uses: actions/upload-artifact@v3
       with:
-        name: smelly-python-${{ github.action }}.html
-        path: ${{ github.workspace }}/report/smelly_python/*.html
-    - name: Download report 
-      uses: actions/download-artifact@v3
-      with:
-        name: smelly-python-${{ github.action }}.md
+        name: smelly-python-html-report-${{ github.action }}
+        path: |
+          ${{ github.workspace }}/report/smelly_python/**/*
+          !${{ github.workspace }}/report/smelly_python/**/*.md
     - name: Set job summary
       shell: bash
       run: cat ${{ github.workspace }}/report/smelly_python/comment.md >> $GITHUB_STEP_SUMMARY
