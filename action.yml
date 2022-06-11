@@ -36,12 +36,11 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: smelly-python-${{ github.action }}.md
-    - name: debugging
+    - name: Get PR number
       shell: bash
-      run: |
-        ls ${{ github.workspace }}/report/smelly_python
-        echo "This should be the issue number"
-        echo ${{ github.event.number }}
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: echo "pr_number=`gh pr view ${GITHUB_REF_NAME} --json number -q '.number'`" >> $GITHUB_ENV
     - name: Delete old comments
       uses: maheshrayas/action-pr-comment-delete@v1
       with:
@@ -49,9 +48,9 @@ runs:
           org: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name}}
           user: github-actions[bot] #commented by the userid
-          issue: ${{ github.event.number }}
+          issue: ${{ env.pr_number }}
     - name: Post comment
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
-      run: gh pr comment ${{ github.event.number }} -F ${{ github.workspace }}/report/smelly_python/comment.md
+      run: gh pr comment ${GITHUB_REF_NAME} -F ${{ github.workspace }}/report/smelly_python/comment.md
