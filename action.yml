@@ -38,15 +38,20 @@ runs:
         name: smelly-python-${{ github.action }}.md
     - name: debugging
       shell: bash
-      run: ls ${{ github.workspace }}/report/smelly_python
-#    - name: Post comment
-#      uses: machine-learning-apps/pr-comment@master
-#      env:
-#        GITHUB_TOKEN: ${{ inputs.github-token }}
-#      with:
-#        path: ${{ github.workspace }}/report/smelly_python/comment.md
+      run: |
+        ls ${{ github.workspace }}/report/smelly_python
+        echo "This should be the issue number"
+        echo ${{ github.event.number }}
+    - name: Delete old comments
+      uses: maheshrayas/action-pr-comment-delete@v1
+      with:
+          github_token: ${{ inputs.github-token }}
+          org: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name}}
+          user: github-actions[bot] #commented by the userid
+          issue: ${{ github.event.number }}
     - name: Post comment
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
-      run: gh pr comment ${GITHUB_REF_NAME} -F ${{ github.workspace }}/report/smelly_python/comment.md
+      run: gh pr comment ${{ github.event.number }} -F ${{ github.workspace }}/report/smelly_python/comment.md
