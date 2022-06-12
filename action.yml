@@ -11,15 +11,16 @@ inputs:
   github-token:
     description: Github token
     required: true
-    default: ""
+    default: ''
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     # Generate report
     - name: Generate report from smelly-python
       shell: bash
       run: ${{ inputs.command }}
     - name: Save output folder with html report
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: smelly-python-html-report-${{ github.action }}
@@ -27,15 +28,17 @@ runs:
           ${{ github.workspace }}/report/smelly_python/**/*
           !${{ github.workspace }}/report/smelly_python/**/*.md
     - name: Set job summary
+      if: always()
       shell: bash
       run: cat ${{ github.workspace }}/report/smelly_python/comment.md >> $GITHUB_STEP_SUMMARY
     - name: Get PR number
+      if: always()
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
       run: echo "pr_number=`gh pr view ${GITHUB_REF_NAME} --json number -q '.number'`" >> $GITHUB_ENV
     - name: Delete old comments
-      if: ${{ env.pr_number != '' }}
+      if: ${{ always() && env.pr_number != '' }}
       uses: maheshrayas/action-pr-comment-delete@v1
       with:
           github_token: ${{ inputs.github-token }}
@@ -44,8 +47,9 @@ runs:
           user: github-actions[bot] #commented by the userid
           issue: ${{ env.pr_number }}
     - name: Post comment
-      if: ${{ env.pr_number != '' }}
+      if: ${{ always() && env.pr_number != '' }}
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
       run: gh pr comment ${GITHUB_REF_NAME} -F ${{ github.workspace }}/report/smelly_python/comment.md
+
