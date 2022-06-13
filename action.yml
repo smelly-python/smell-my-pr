@@ -1,5 +1,5 @@
 name: 'Smelly Python: Smell My PR'
-description: 'TODO'
+description: 'Post a summary of pylint report as a comment on PRs.'
 branding:
   icon: 'message-square'
   color: 'orange'
