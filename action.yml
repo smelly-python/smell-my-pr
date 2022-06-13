@@ -23,7 +23,7 @@ runs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: smelly-python-html-report-${{ github.action }}
+        name: smelly-python-html-report
         path: |
           ${{ github.workspace }}/report/smelly_python/**/*
           !${{ github.workspace }}/report/smelly_python/**/*.md
