@@ -4,10 +4,10 @@ branding:
   icon: 'message-square'
   color: 'orange'
 inputs:
-  command: 
-    description: The folder containing python files for pylint.
+  command:
+    description: The command to run smelly-python. 
     required: true
-    default: smelly-python -d src
+    default: pipenv run smelly-python -d src
   github-token:
     description: Github token
     required: true

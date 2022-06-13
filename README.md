@@ -6,6 +6,11 @@ An action that runs [`smelly-python`](https://github.com/smelly-python/smelly-py
 
 ## Workflow setup
 
+**Required input:**
+
+- `command`: command that runs `smelly-python` on the module you want to analyse. If `smelly-python` is installed with `pipenv`, it is `pipenv run smelly-python -d <module>`. 
+- `github-token: ${{secrets.GITHUB_TOKEN}}`
+
 It is necessary to include the following permissions in your job. See the example of a workflow setup below.
 
 ```(yaml)
@@ -31,5 +36,5 @@ jobs:
     - uses: smelly-python/smell-my-pr@main
       with: 
         github-token: ${{secrets.GITHUB_TOKEN}}
-        command: pipenv run report
+        command: pipenv run smelly-python -d src
 ```
