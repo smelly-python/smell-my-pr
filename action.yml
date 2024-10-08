@@ -12,9 +12,22 @@ inputs:
     description: Github token
     required: true
     default: ''
+  install-pipenv: 
+    description: Specify whether pipenv should still be installed
+    required: false
+    default: true
 runs:
   using: 'composite'
   steps:
+    - name: Install pipenv
+      run: |
+          sudo apt-get update
+          sudo -H pip install -U pipenv
+    - name: Setup smelly-python
+      run: | 
+          pip install smelly-python
+          pip install bs4
+          pip install pylint 
     # Generate report
     - name: Generate report from smelly-python
       shell: bash
