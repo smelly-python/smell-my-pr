@@ -8,8 +8,11 @@ An action that runs [`smelly-python`](https://github.com/smelly-python/smelly-py
 
 **Required input:**
 
-- `command`: command that runs `smelly-python` on the module you want to analyse. If `smelly-python` is installed with `pipenv`, it is `pipenv run smelly-python -d <module>`. 
+- `command`: command that runs `smelly-python` on the module you want to analyse. We automatically install smelly-python using pipenv so you can use `pipenv run smelly-python -d <module>`. 
 - `github-token: ${{secrets.GITHUB_TOKEN}}`
+
+**optional input:**
+- `install-pipenv` (Default True): Installs pipenv before trying to install smelly-python. Only set this to False when you have manually installed pipenv earlier.  
 
 It is necessary to include the following permissions in your job. See the example of a workflow setup below.
 
@@ -37,4 +40,5 @@ jobs:
       with: 
         github-token: ${{secrets.GITHUB_TOKEN}}
         command: pipenv run smelly-python -d src
+        install-pipenv: true
 ```
